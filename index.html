@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            border:1px solid black;
+            width:900px;
+            margin-left:350px;
+            text-align:center;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            background-color: aquamarine;
+            color:red;
+            margin-top:50px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+           border-radius: 20px;
+           margin-bottom: 30px;;
+        }
+        #images{
+            width:500px;
+            margin-bottom: 20px;
+        }
+        h1{
+            color:red;
+            margin-top: 40px;
+            text-align: center;
+            border:1px solid black;
+            background-color:aqua;
+            width:900px;
+            margin-left: 350px;
+            font-family: sans-serif ;
+            height:50px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+          border-radius: 20px;       
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Current Weather Data</h1>
+    <div id = "container"></div>
+</body>
+</html>
+<script>
+    // var url = "https://api.openweathermap.org/data/2.5/weather?lat=90&lon=48&appid=70b5cee2df76ba3dc281efa4e1396901";
+   var url = "https://api.openweathermap.org/data/2.5/weather?q=London&appid=70b5cee2df76ba3dc281efa4e1396901";
+    console.log(url)
+    async function getData(){
+        try{
+            let res = await fetch(url);
+            let data = await res.json();
+            displayData(data);
+       
+        }catch(err) {
+            console.log(err);
+        }
+    }
+    getData();
+  function displayData(data){
+
+        var box = document.createElement("div")
+
+        var temp = document.createElement("p")
+        temp.innerText ="temp :   "+ data.main.temp;
+
+        var pressure = document.createElement("p")
+        pressure.innerText = "pressure: "+ data.main.pressure;
+
+        var humidity = document.createElement("p")
+        humidity.innerText = "humidity: "+data.main.humidity;
+
+        var windspeed = document.createElement("p")
+        windspeed.innerText = "windspeed:  "+data.wind.speed;
+
+        var sunrise = document.createElement("p")
+        sunrise.innerText = "sunrise:  "+data.sys.sunrise;
+
+
+        var sunset = document.createElement("p")
+        sunset.innerText = "sunset:  "+ data.sys.sunset;
+
+        var description = document.createElement("p")
+        description.innerText = "description:  "+data.weather[0].description;
+       
+        var country = document.createElement("p")
+        country.innerText = "country: "+data.name;
+
+
+        box.append(temp, pressure,humidity,windspeed,sunrise,sunset,description,country);
+
+      container.append(temp,pressure,humidity,windspeed,sunrise,sunset,description,country)
+        
+   if(description !== "clear Sky"){
+       var image = document.createElement("img")
+       image.setAttribute("id","images")
+    // image.src = "https://images.pexels.com/photos/301599/pexels-photo-301599.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+      image.src = "https://images.pexels.com/photos/53594/blue-clouds-day-fluffy-53594.jpeg?cs=srgb&dl=pexels-pixabay-53594.jpg&fm=jpg"
+    document.querySelector("#container").append(image)
+        
+    }       
+    
+      
+  }
+
+
+    </script>
